@@ -87,6 +87,10 @@
         let endpoint = document.getElementById('endpoint').value;
         const output = document.getElementById('output');
 
+        //Hide forms
+        recordForm.style.display="none";
+        recordIDcontainer.style.display="none";
+
         fetch(endpoint)
           .then(function(response) {
             if (response.status < 200 || response.status >= 300 ) {
@@ -114,11 +118,14 @@
       // The main difference from fetchAll() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchOne() {
+
+        //Hide forms
+        recordForm.style.display="none";
+        recordIDcontainer.style.display="none";
+
         let endpoint = document.getElementById('endpoint').value;
         const output = document.getElementById('output');
-
         let rID = window.prompt('Enter record id');
-
         let url = endpoint.concat("/").concat(rID);
 
         fetch(url)
@@ -235,6 +242,10 @@
         let endpoint = document.getElementById('endpoint').value;
         let rID = window.prompt('Enter record id');
         let record = endpoint.concat("/").concat(rID);
+
+        //Display hidden forms
+        recordForm.style.display="none";
+        recordIDcontainer.style.display="none";
 
         fetch(record, { 
           method: 'delete'
