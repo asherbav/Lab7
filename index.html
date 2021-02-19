@@ -239,13 +239,15 @@
       // request; check the writeup to view the URL pattern for get one and delete. THERE IS NO 
       // delete all, only delete one.
       function deleteRecord() {
+
+        //Hide forms
+        recordForm.style.display="none";
+        recordIDcontainer.style.display="none";
+        
         let endpoint = document.getElementById('endpoint').value;
         let rID = window.prompt('Enter record id');
         let record = endpoint.concat("/").concat(rID);
 
-        //Display hidden forms
-        recordForm.style.display="none";
-        recordIDcontainer.style.display="none";
 
         fetch(record, { 
           method: 'delete'
