@@ -84,7 +84,29 @@
       // The main difference from fetchOne() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchAll() {
-        // TODO
+        let endpoint = document.getElementById('endpoint').value;
+        const output = document.getElementById('output');
+
+        fetch(endpoint)
+          .then(function(response) {
+            if (response.status !== 200) {
+              console.log('Looks like there was a problem. Status Code: ' + response.status);
+              output.innerHTML = response.statusText + ":" + response.status;
+              return;
+            }
+
+            // Examine the text in the response
+            response.json().then(function(data) {
+              console.log(data);
+              console.log(JSON.stringify(data));
+              output.innerHTML = JSON.stringify(data);
+            });
+          })
+          .catch(function(response) {
+            console.log('Fetch Error :-S', response);
+            output.innerHTML = response.statusText+ ":" + response.status;
+          });
+
       }
 
       // This function should fetch one entry from the given endpoint.
@@ -92,7 +114,32 @@
       // The main difference from fetchAll() will be the URL you request from; check
       // the writeup to view the URL pattern for fetch one and fetch all
       function fetchOne() {
-        // TODO
+        let endpoint = document.getElementById('endpoint').value;
+        const output = document.getElementById('output');
+
+        let rID = window.prompt('Enter record id');
+
+        let url = endpoint.concat("/").concat(rID);
+
+        fetch(url)
+          .then(function(response) {
+            if (response.status !== 200) {
+              console.log('Looks like there was a problem. Status Code: ' + response.status);
+              output.innerHTML = response.statusText+ ":" + response.status;
+              return;
+            }
+
+            // Examine the text in the response
+            response.json().then(function(data) {
+              console.log(data);
+              console.log(JSON.stringify(data));
+              output.innerHTML = JSON.stringify(data);
+            });
+          })
+          .catch(function(response) {
+            console.log('Fetch Error :-S', response);
+            output.innerHTML = response.statusText+ ":" + response.status;
+          });
       }
 
       // This function should use fetch to create one entry in the given endpoint.
@@ -100,7 +147,41 @@
       // The main difference from updateRecord() will be the URL you send data to; check
       // the writeup to view the URL pattern for create and update
       function createRecord() {
-        // TODO
+        
+        let endpoint = document.getElementById('endpoint').value;
+        const output = document.getElementById('output');
+        //Display hidden recordForm
+        recordForm.style.display="inline";
+
+        recordForm.addEventListener('submit', function(e){
+          e.preventDefault();
+
+          let myForm = document.getElementById('recordForm');
+
+          let postData = { 
+            author: document.getElementById("author").value, 
+            title: document.getElementById("title").value, 
+          }
+
+          fetch(endpoint, {
+            method: 'post',
+            body: JSON.stringify(postData),
+            headers: {"Content-type": "application/json; charset=UTF-8" }
+          }).then(function(response){
+            if (response.status !== 200) {
+              console.log('Looks like there was a problem. Status Code: ' + response.status);
+              output.innerHTML = response.statusText+ ":" + response.status;
+              return;
+            }
+            console.log(response);
+            output.innerHTML = JSON.stringify(postData);
+          }).catch(function(response){
+            console.error(response);
+            output.innerHTML = response.statusText + ":" + response.status;
+          })
+
+        })
+      
       }
 
       // This function should use fetch to update one existing entry in the given endpoint.
@@ -108,7 +189,41 @@
       // The main difference from createRecord() will be the URL you send data to; check
       // the writeup to view the URL pattern for create and update
       function updateRecord() {
-        // TODO
+        
+        let endpoint = document.getElementById('endpoint').value;
+        const output = document.getElementById('output');
+        //Display hidden forms
+        recordForm.style.display="inline";
+        recordIDcontainer.style.display="inline";
+
+        recordForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          let rID = document.getElementById("recordID").value;
+          let record = endpoint.concat("/").concat(rID);
+
+          let putData = { 
+            author: document.getElementById("author").value, 
+            title: document.getElementById("title").value, 
+          }
+
+          fetch(record, {
+            method: 'put',
+            body: JSON.stringify(putData),
+            headers: {"Content-type": "application/json; charset=UTF-8" }
+          }).then(function(response){
+            if (response.status !== 200) {
+              console.log('Looks like there was a problem. Status Code: ' + response.status);
+              output.innerHTML = response.statusText + ":" + response.status;
+              return;
+            }
+            console.log(response);
+            output.innerHTML = JSON.stringify(putData);
+          }).catch(function(response){ 
+            console.error(response);
+            output.innerHTML = response.statusText + ":" + response.status;
+          })
+
+        })
       }
 
       // This function should use fetch to delete one existing entry in the given endpoint.
@@ -117,8 +232,24 @@
       // request; check the writeup to view the URL pattern for get one and delete. THERE IS NO 
       // delete all, only delete one.
       function deleteRecord() {
-        // TODO
-      }
+        let endpoint = document.getElementById('endpoint').value;
+        let rID = window.prompt('Enter record id');
+        let record = endpoint.concat("/").concat(rID);
+
+        fetch(record, { 
+          method: 'delete'
+        }).then(function(response){ 
+          if (response.status !== 200) {
+              console.log('Looks like there was a problem. Status Code: ' + response.status);
+              output.innerHTML = response.statusText + ":" + response.status;
+              return; 
+            }
+
+          }).catch(function(response){ 
+            console.error(response);
+            output.innerHTML = response.statusText + ":" + response.status;
+          })
+        }
 
       window.addEventListener('DOMContentLoaded', () => {
         // Action Form Event Listener
