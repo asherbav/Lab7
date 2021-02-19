@@ -243,10 +243,12 @@
         //Hide forms
         recordForm.style.display="none";
         recordIDcontainer.style.display="none";
-        
+
         let endpoint = document.getElementById('endpoint').value;
         let rID = window.prompt('Enter record id');
         let record = endpoint.concat("/").concat(rID);
+
+        output.innerHTML = "";
 
 
         fetch(record, { 
