@@ -89,7 +89,7 @@
 
         fetch(endpoint)
           .then(function(response) {
-            if (response.status !== 200) {
+            if (response.status < 200 || response.status >= 300 ) {
               console.log('Looks like there was a problem. Status Code: ' + response.status);
               output.innerHTML = response.statusText + ":" + response.status;
               return;
@@ -123,7 +123,7 @@
 
         fetch(url)
           .then(function(response) {
-            if (response.status !== 200) {
+            if (response.status < 200 || response.status >= 300 ) {
               console.log('Looks like there was a problem. Status Code: ' + response.status);
               output.innerHTML = response.statusText+ ":" + response.status;
               return;
@@ -168,7 +168,7 @@
             body: JSON.stringify(postData),
             headers: {"Content-type": "application/json; charset=UTF-8" }
           }).then(function(response){
-            if (response.status !== 200) {
+            if (response.status < 200 || response.status >= 300 ) {
               console.log('Looks like there was a problem. Status Code: ' + response.status);
               output.innerHTML = response.statusText+ ":" + response.status;
               return;
@@ -211,7 +211,7 @@
             body: JSON.stringify(putData),
             headers: {"Content-type": "application/json; charset=UTF-8" }
           }).then(function(response){
-            if (response.status !== 200) {
+            if (response.status < 200 || response.status >= 300 ) {
               console.log('Looks like there was a problem. Status Code: ' + response.status);
               output.innerHTML = response.statusText + ":" + response.status;
               return;
@@ -239,7 +239,7 @@
         fetch(record, { 
           method: 'delete'
         }).then(function(response){ 
-          if (response.status !== 200) {
+          if (response.status < 200 || response.status >= 300 ) {
               console.log('Looks like there was a problem. Status Code: ' + response.status);
               output.innerHTML = response.statusText + ":" + response.status;
               return; 
